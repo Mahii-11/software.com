@@ -1,10 +1,12 @@
 import About from "../components/About";
+import CoreCapabilities from "../components/CoreCapabilities";
 import { Hero } from "../components/Hero";
 import { Navbar } from "../components/Navbar";
 import { Portfolio } from "../components/Portfolio";
 import { Services } from "../components/Services";
 import { Technologies } from "../components/Technologies";
 import TrustTeamSection from "../components/TrustTeamSection";
+import UltraPremiumSection from "../components/UltraPremiumSection";
 
 function Home() {
   return (
@@ -16,6 +18,8 @@ function Home() {
       <About />
       <Portfolio />
       <TrustTeamSection/>
+      <CoreCapabilities/>
+      <UltraPremiumSection/>
     </div>
   );
 }
