@@ -51,10 +51,7 @@
     scroll-behavior: smooth;
   }
 
-  body {
-    @apply  text-foreground antialiased selection:bg-primary/30 selection:text-white;
-    font-family: var(--font-body);
-  }
+  body { font-family: var(--font-body); }
 
   h1,
   h2,
