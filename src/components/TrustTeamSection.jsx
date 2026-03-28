@@ -132,7 +132,7 @@ export default function CurvedTeam() {
   return (
     <section className=" max-w-7xl mx-auto mt-16 text-center">
           <h1  className="text-3xl md:text-4xl font-bold text-gray-800 mb-10 leading-tight">Empowering Your Success Through Expertise & Reliability</h1>
-          <div className="grid sm:grid-cols-2 gap-y-6 gap-x-64 mt-14 px-8 sm:px-32">
+          <div className="grid sm:grid-cols-2 gap-y-6 gap-x-64 mt-14 px-8 sm:px-10 lg:px-32 ">
 
       {features.map((item) => {
         const Icon = item.icon;

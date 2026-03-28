@@ -45,7 +45,7 @@ export function Navbar() {
             <Rocket className="w-6 h-6 fill-current" />
           </div>
           <span className={`font-display font-bold text-xl tracking-tight ${isScrolled ? "text-indigo-600" : "text-slate-900"}`}>
-            Nova<span className={`${isScrolled ? "text-slate-900" : "text-blue-700"}`}>Tech</span>
+            Bangla<span className={`${isScrolled ? "text-slate-900" : "text-blue-700"}`}>Tech</span>
           </span>
         </Link>
 
