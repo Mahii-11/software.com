@@ -6,7 +6,7 @@ import { Portfolio } from "../components/Portfolio";
 import { Services } from "../components/Services";
 import { Technologies } from "../components/Technologies";
 import TrustTeamSection from "../components/TrustTeamSection";
-import UltraPremiumSection from "../components/UltraPremiumSection";
+
 
 function Home() {
   return (
@@ -19,7 +19,7 @@ function Home() {
       <Portfolio />
       <TrustTeamSection/>
       <CoreCapabilities/>
-      <UltraPremiumSection/>
+    
     </div>
   );
 }
