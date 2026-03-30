@@ -4,7 +4,8 @@ import { Hero } from "../components/Hero";
 import { Navbar } from "../components/Navbar";
 import { Portfolio } from "../components/Portfolio";
 import { Services } from "../components/Services";
-import { Technologies } from "../components/Technologies";
+import TrustedByLogos from "../components/TrustedByLogos";
+//import { Technologies } from "../components/Technologies";
 import TrustTeamSection from "../components/TrustTeamSection";
 
 
@@ -13,7 +14,7 @@ function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
       <Navbar />
       <Hero />
-      <Technologies />
+      <TrustedByLogos />
       <Services />
       <About />
       <Portfolio />

@@ -6,6 +6,31 @@ import { useEffect, useState } from "react";
 import { getHeroSectionData } from "../services/api";
 import HeroSkeleton from "../loading/HeroSkeleton";
 
+const HeroTitleByPosition = ({ title, highlightIndex }) => {
+  if (!title) return null;
+
+  const words = title.split(" ");
+
+  return (
+    <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-[1.1] mb-6 text-slate-900">
+      {words.map((word, index) =>
+        index === highlightIndex ? (
+          <span key={index} className="text-gradient">
+            {word}{" "}
+          </span>
+        ) : (
+          <span key={index}>{word} </span>
+        )
+      )}
+    </h1>
+  );
+};
+
+
+
+
+
+
 export function Hero() {
   const [heroData, setHeroData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,9 +78,10 @@ export function Hero() {
             Available for new projects
           </div>
 
-          <h1 className="font-display font-extrabold text-5xl text-slate-900 md:text-7xl leading-[1.1] mb-6">
-            Build the <span className="text-gradient">Future</span> with Us
-          </h1>
+          <HeroTitleByPosition
+            title={heroData[0]?.title}
+            highlightIndex={2} 
+           />
 
           <p className="text-xl text-slate-600 mb-8 max-w-lg leading-relaxed">
             {heroData[0]?.description}

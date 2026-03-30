@@ -54,12 +54,11 @@ function About() {
             <h2 className="font-display font-bold text-slate-900 text-3xl md:text-4xl mb-6">
               Who <span className="text-gradient">We Are</span>
             </h2>
-            <p className="text-lg text-slate-700 mb-6 leading-relaxed">
-              {about?.description?.split("\n\n")[0]}
-            </p>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-             {about?.description?.split("\n\n")[1]}
-            </p>
+               <div className="space-y-6 text-lg text-slate-700 leading-relaxed mb-7">
+                 {about?.description?.split(/\n+/).map((para, idx) => (
+                 <p key={idx}>{para}</p>
+             ))}
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {about?.items?.map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
