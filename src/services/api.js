@@ -43,10 +43,14 @@ export const fetchData = async (endpoint, options = {}) => {
   return raw ? json : normalizeData(json);
 };
 
-// 🔹 Specific API functions (clean use)
+
+
 export const getHeroSectionData = () => fetchData("/hero-section-data");
 export const getWhoWeAre = () => fetchData("/identity-data");
 export const getSelectedData = () => fetchData("/project-data");
 export const getOurTeam = () => fetchData("/our-team-data");
 export const getOurExpertise = () => fetchData("/expertise-data");
+export const getCapabilityData = () => fetchData("/capability-data");
+export const getServiceData = () => fetchData("/service-data");
+export const getFeatureData = () => fetchData("/feature-data");
 

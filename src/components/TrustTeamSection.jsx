@@ -1,11 +1,11 @@
-/* eslint-disable no-unused-vars */
-import { motion } from "framer-motion";
-import { Users, UserCheck, Sparkles, Clock } from "lucide-react";
+import { useCallback } from "react";
+import { Users, UserCheck, Sparkles, Clock, Speaker } from "lucide-react";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
-import { getOurTeam } from "../services/api";
+import { getFeatureData, getOurTeam } from "../services/api";
 import TeamSkeleton from "../loading/TeamSkeleton";
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import TrustFeaturesSkeleton from "../loading/TrustFeaturesSkeleton";
 
 
 const colors = [
@@ -173,46 +173,63 @@ export default function CurvedTeam() {
   );
 }
 
+ 
 
 
 
 
  function TrustFeatures() {
+    const [features, setFeatures] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  const features = [
-    {
-      id: 1,
-      icon: Users,
-      title: "Professional Developers",
-      description:
-        "We have professional software developers with expertise in 100+ technologies.",
-      color: "bg-pink-100 text-pink-600",
-    },
-    {
-      id: 2,
-      icon: UserCheck,
-      title: "Dedicated Account Specialists",
-      description:
-        "Tailored solutions for every key account.",
-      color: "bg-blue-100 text-blue-600",
-    },
-    {
-      id: 3,
-      icon: Sparkles,
-      title: "Flexible Strategy",
-      description:
-        "Innovative & flexible strategy suitable for any changing requirements.",
-      color: "bg-emerald-100 text-emerald-600",
-    },
-    {
-      id: 4,
-      icon: Clock,
-      title: "On-time Delivery",
-      description:
-        "Delivering ahead of schedule, every time.",
-      color: "bg-violet-100 text-violet-600",
-    },
-  ];
+  const iconMap = {
+  Developer: Users,
+  Specialists: UserCheck,
+  Strategy: Speaker,
+  Delivery: Clock,
+ }
+
+
+  const colorMap = {
+  Developer: "bg-pink-100 text-pink-600",
+  Specialists: "bg-blue-100 text-blue-600",
+  Strategy: "bg-emerald-100 text-emerald-600",
+  Delivery: "bg-violet-100 text-violet-600",
+};
+
+
+ const normalizeFeatures = useCallback((apiData) => {
+  return apiData.map((item) => ({
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    icon: iconMap[item.icon] || Users,
+    color: colorMap[item.icon] || "bg-gray-100 text-gray-600",
+  }));
+}, []);
+
+     useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const res = await getFeatureData();
+        const normalized = normalizeFeatures(res.data.data);
+        setFeatures(normalized);
+      } catch (error) {
+        console.error("Error fetching features:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [normalizeFeatures]);
+
+
+  if (loading) return <TrustFeaturesSkeleton />;
+
+
+  
 
   return (
     <section className=" max-w-7xl mx-auto mt-16 text-center">

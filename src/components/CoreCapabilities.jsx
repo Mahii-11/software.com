@@ -1,27 +1,61 @@
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import CoreCapabilitiesSkeleton from "../loading/CoreCapabilitiesSkeleton";
+import { getCapabilityData, getServiceData } from "../services/api";
 
-const services = [
-  {
-    title: "Staff Augmentation",
-    description:
-      "Instantly scale your team with vetted AI/cloud experts when you need them.",
-    image: "/images/hero-main.jpg",
-  },
-  {
-    title: "Managed Services",
-    description:
-      "End-to-end support so your team can focus on innovation.",
-    image: "/images/hero-1.jpg",
-  },
-  {
-    title: "MVP Development",
-    description:
-      "Launch market-ready MVPs in 8–12 weeks with faster iterations.",
-    image: "/images/hero-2.jpg",
-  },
-];
+
 
 export default function CoreCapabilities() {
+  const [capabilities, setCapabilities] = useState([]);
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+     const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await getCapabilityData();
+        setCapabilities(data);
+      } catch (error) {
+        console.error("Error fetching capability data:", error);
+      } finally {
+        setLoading(false);
+      }
+     }
+      fetchData();
+
+  }, []);
+
+
+
+
+
+  useEffect(() => {
+      const fetchServices = async () => {
+        try {
+          setLoading(true);
+          const data = await getServiceData();
+          setServices(data);
+
+        } catch (error) {
+          console.error("Error fetching service data:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+      fetchServices();
+
+  }, []);
+  
+  
+  if (loading) return <CoreCapabilitiesSkeleton />;
+
+   const data = capabilities[0];
+
+
+
+
   return (
     <section className="bg-gradient-to-br from-gray-50 via-white to-blue-50 py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -36,12 +70,12 @@ export default function CoreCapabilities() {
             </p>
 
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
-              Drive Growth With <br /> Strategic Technology Solutions
+              {data?.title.split(" ").slice(0, 3).join(" ")} <br />
+              {data?.title.split(" ").slice(3).join(" ")}
             </h2>
 
             <p className="text-gray-600 text-lg mb-8">
-              We help ambitious companies scale faster, innovate smarter,
-              and build future-ready digital platforms.
+             {data?.short_description}
             </p>
 
             <button className="inline-flex items-center gap-2 bg-blue-600 text-white px-7 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition">
@@ -53,7 +87,7 @@ export default function CoreCapabilities() {
           {/* Right Image */}
           <div className="relative">
             <img
-              src="/images/team.jpg"
+              src={data?.image}
               alt="Team Working"
               className="rounded-3xl shadow-2xl object-cover w-full h-[400px]"
             />
@@ -84,7 +118,7 @@ export default function CoreCapabilities() {
                   {service.title}
                 </h3>
                 <p className="text-sm mb-4 opacity-90">
-                  {service.description}
+                  {service.short_description}
                 </p>
                 <div className="flex items-center gap-2 text-blue-300 group-hover:gap-3 transition-all">
                   Learn More
@@ -94,7 +128,6 @@ export default function CoreCapabilities() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
