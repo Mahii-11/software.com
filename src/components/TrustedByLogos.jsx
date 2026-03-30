@@ -102,7 +102,7 @@ export default function TrustedBySection() {
         </p>
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
           Trusted by{" "}
-          <span className="bg-gradient-to-r from-blue-500 to-violet-500 bg-clip-text text-transparent">
+          <span className="text-gradient">
             leading companies
           </span>
         </h2>
