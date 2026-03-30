@@ -1,15 +1,46 @@
 /* eslint-disable no-unused-vars */
 import { CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { getWhoWeAre } from "../services/api";
+import AboutSkeleton from "../loading/AboutSkeleton";
 
-const features = [
-  { title: "Agile Development Methodology" },
-  { title: "User-Centric Design" },
-  { title: "Scalable Architecture" },
-  { title: "24/7 Support & Maintenance" },
-];
+
+
 
 function About() {
+  const [aboutData, setAboutData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        setLoading(true);
+        const data = await getWhoWeAre();
+        setAboutData(data);
+      } catch (err) {
+        console.error("Error fetching about data:", err);
+
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAboutData();
+  }, []);
+
+
+  if (loading) return <AboutSkeleton />;
+
+ const about = aboutData[0]; 
+
+
+
+
+
+
+
+
+
   return (
     <section id="about" className="py-24 bg-white">
       <div className="container mx-auto px-4 md:px-6">
@@ -24,21 +55,16 @@ function About() {
               Who <span className="text-gradient">We Are</span>
             </h2>
             <p className="text-lg text-slate-700 mb-6 leading-relaxed">
-              We are a collective of designers, developers, and strategists
-              passionate about building the future of the web. Founded in 2024,
-              NovaTech was born from a desire to create digital products that
-              are not just functional, but exceptional.
+              {about?.description?.split("\n\n")[0]}
             </p>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Our mission is simple: To empower businesses with technology that
-              scales, inspires, and performs. We don't just write code; we solve
-              problems.
+             {about?.description?.split("\n\n")[1]}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {features.map((item, i) => (
+              {about?.items?.map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 text-indigo-700" />
-                  <span className="font-medium text-black">{item.title}</span>
+                  <span className="font-medium text-black">{item.trim()}</span>
                 </div>
               ))}
             </div>
@@ -55,7 +81,7 @@ function About() {
             <div className="relative aspect-square max-w-[500px] mx-auto">
               <div className="absolute inset-0  border border-white/10 rounded-xl overflow-hidden shadow-xl">
                 <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80"
+                  src={about?.image}
                   alt="Our Team"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />

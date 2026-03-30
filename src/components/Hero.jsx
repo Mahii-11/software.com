@@ -2,8 +2,35 @@
 import { motion } from "framer-motion";
 import { Button } from "../components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getHeroSectionData } from "../services/api";
+import HeroSkeleton from "../loading/HeroSkeleton";
 
 export function Hero() {
+  const [heroData, setHeroData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    const fetchHerData = async () => {
+      try {
+        setLoading(true);
+        const data = await getHeroSectionData();
+        setHeroData(data);
+
+      } catch (error) {
+        console.error("Error fetching hero section data:", error);
+      } finally {
+        setLoading(false)
+      }
+    };
+    fetchHerData();
+  }, []);
+
+   if (loading) return <HeroSkeleton />;
+
+
+
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -31,8 +58,7 @@ export function Hero() {
           </h1>
 
           <p className="text-xl text-slate-600 mb-8 max-w-lg leading-relaxed">
-            We transform visionary ideas into stunning digital realities.
-            Full-stack engineering, premium design, and scalable architecture.
+            {heroData[0]?.description}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
@@ -77,7 +103,7 @@ export function Hero() {
                transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
               >
                 <img 
-                  src="/images/hero-2.jpg"
+                  src={heroData[0]?.image_one}
                   alt="Tech Professional" 
                   className="w-full h-full object-cover rounded-[20px]
                   shadow-[0_40px_100px_rgba(0,0,0,0.15)] z-10"
@@ -87,8 +113,8 @@ export function Hero() {
               
               {/* Stat: 30+ Countries (Below top left image, centered with it) */}
               <div className="text-center py-4">
-                <div className="text-[40px] font-bold text-slate-900 leading-none">30+</div>
-                <div className="text-slate-500 text-[16px] font-semibold mt-2">Countries Served</div>
+                <div className="text-[40px] font-bold text-slate-900 leading-none">{heroData[0]?.stat_two_count}+</div>
+                <div className="text-slate-500 text-[16px] font-semibold mt-2">{heroData[0]?.stat_two_text}</div>
               </div>
             </div>
 
@@ -96,8 +122,8 @@ export function Hero() {
             <div className="flex flex-col gap-8 pt-12">
               {/* Stat: 850+ Tech Pros */}
               <div className="text-center py-4">
-                <div className="text-[40px] font-bold text-[#1E293B] leading-none">850+</div>
-                <div className="text-[#64748B] text-[16px] font-semibold mt-2">Tech Professionals</div>
+                <div className="text-[40px] font-bold text-[#1E293B] leading-none">{heroData[0]?.stat_one_count}+</div>
+                <div className="text-[#64748B] text-[16px] font-semibold mt-2">{heroData[0]?.stat_one_text}</div>
               </div>
 
               {/* Bottom Right Image */}
@@ -108,7 +134,7 @@ export function Hero() {
               
               >
                 <img 
-                  src="/images/hero-main.jpg"
+                  src={heroData[0]?.image_two}
                   alt="Team Collaboration" 
                   className="w-full h-full object-cover rounded-[20px]
                   shadow-[0_40px_100px_rgba(0,0,0,0.15)] z-10"

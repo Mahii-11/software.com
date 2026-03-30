@@ -2,41 +2,36 @@
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { ExternalLink, Github } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getSelectedData } from "../services/api";
+import PortfolioSkeleton from "../loading/PortfolioSkeleton";
 
-const projects = [
-  {
-    title: "FinDash Analytics",
-    category: "SaaS Dashboard",
-    description:
-      "A comprehensive financial analytics platform with real-time data visualization and reporting tools.",
-    tags: ["React", "D3.js", "Node.js"],
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    gradient: "from-blue-600 to-cyan-500",
-  },
-  {
-    title: "E-Commerce Luxe",
-    category: "Mobile App",
-    description:
-      "Premium shopping experience for a luxury fashion brand featuring AR try-on capabilities.",
-    tags: ["React Native", "Firebase", "Stripe"],
-    image:
-      "https://images.unsplash.com/photo-1555421689-491a97ff2040?w=800&q=80",
-    gradient: "from-purple-600 to-pink-500",
-  },
-  {
-    title: "HealthCore AI",
-    category: "MedTech Platform",
-    description:
-      "AI-powered diagnostic assistant for healthcare professionals to streamline patient intake.",
-    tags: ["Next.js", "Python", "OpenAI"],
-    image:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
-    gradient: "from-emerald-600 to-teal-500",
-  },
-];
 
 export function Portfolio() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        const data = await getSelectedData();
+        setProjects(data);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProjects();
+  }, []);
+
+
+   if (loading) return <PortfolioSkeleton />;
+
+
+
   return (
     <section id="portfolio" className="py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -81,16 +76,16 @@ export function Portfolio() {
               {/* Content */}
               <div className="p-6 relative z-20">
                 <div className="text-xs font-bold text-indigo-600 mb-2 uppercase tracking-wide">
-                  {project.category}
+                  {project.title}
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                  {project.title}
+                  {project.sub_title}
                 </h3>
                 <p className="text-slate-600 text-sm mb-4 line-clamp-2">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag) => (
+                  {project.technology.map((tag) => (
                     <span
                       key={tag}
                       className="text-xs px-2 py-1 rounded bg-gray-50 border border-gray-200 text-slate-600"

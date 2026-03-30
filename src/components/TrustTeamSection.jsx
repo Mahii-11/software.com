@@ -1,32 +1,45 @@
 import { Users, UserCheck, Sparkles, Clock } from "lucide-react";
 import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
+import { getOurTeam } from "../services/api";
+import TeamSkeleton from "../loading/TeamSkeleton";
+
+
+const colors = [
+  "bg-blue-100",
+  "bg-violet-100",
+  "bg-emerald-100",
+  "bg-rose-100",
+];
+
 export default function CurvedTeam() {
-  const team = [
-    {
-      name: "Bhuiyan Mohammad Iklash",
-      role: "Enterprise Architect",
-      img: "/images/team1.png",
-      color: "bg-blue-100",
-    },
-    {
-      name: "Biplab Chandra Sarker",
-      role: "Solution Architect",
-      img: "/images/team2.png",
-      color: "bg-violet-100",
-    },
-    {
-      name: "Md. Imrul Hasan",
-      role: "Staff Software Engineer",
-      img: "/images/team3.png",
-      color: "bg-emerald-100",
-    },
-    {
-      name: "Md Abdul Mukit",
-      role: "Solution Architect L-I",
-      img: "/images/team4.png",
-      color: "bg-rose-100",
-    },
-  ];
+  const [teamData, setTeamData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeamData = async () => {
+      try {
+        setLoading(true);
+        const data = await getOurTeam();
+        setTeamData(data);
+      } catch (error) {
+        console.error("Error fetching team data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTeamData();
+  }, []);
+
+  const normalizedTeam = teamData.map((item, index) => ({
+    name: item.name,
+    role: item.designation,
+    img: item.image,
+    color: colors[index % colors.length],
+  }));
+
+   if (loading)  return <TeamSkeleton/>;
+ 
 
 
   return (
@@ -37,7 +50,7 @@ export default function CurvedTeam() {
           Meet The Experts Behind Our Success
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          {team.map((member, i) => (
+          {normalizedTeam.map((member, i) => (
             <div key={i} className="group text-center">
 
               {/* Card */}
