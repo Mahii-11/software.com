@@ -50,7 +50,7 @@ export function Navbar() {
     <img
       src="/images/logo.png"
       alt="BanglaTech Logo"
-      className="w-5 h-5 sm:w-6 sm:h-6 md:w-44 md:h-12 object-contain"
+      className="w-5 h-5 sm:w-6 sm:h-6 md:w-36 md:h-12 object-contain"
     />
 
     {/* Glow Effect */}
