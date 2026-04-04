@@ -40,14 +40,40 @@ export function Navbar() {
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white shadow-lg shadow-primary/25 group-hover:shadow-primary/40 transition-all duration-300">
-            <Rocket className="w-6 h-6 fill-current" />
-          </div>
-          <span className={`font-display font-bold text-xl tracking-tight ${isScrolled ? "text-indigo-600" : "text-slate-900"}`}>
-            Bangla<span className={`${isScrolled ? "text-slate-900" : "text-blue-700"}`}>Tech</span>
-          </span>
-        </Link>
+       <Link
+  href="/"
+  className="flex items-center gap-2 sm:gap-3 group cursor-pointer select-none"
+>
+  {/* Logo Icon */}
+    <div
+  >
+    <img
+      src="/images/logo.png"
+      alt="BanglaTech Logo"
+      className="w-5 h-5 sm:w-6 sm:h-6 md:w-44 md:h-12 object-contain"
+    />
+
+    {/* Glow Effect */}
+    <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 group-hover:opacity-100 transition duration-300"></div>
+  </div>
+
+  {/* Text 
+  <h1
+    className={`flex items-center font-bold tracking-tight 
+    text-lg sm:text-xl md:text-2xl 
+    transition-colors duration-300
+    ${isScrolled ? "text-indigo-600" : "text-slate-900"}`}
+  >
+    <span className="font-extrabold">Bangla</span>
+    <span
+      className={`ml-1 font-extrabold 
+      ${isScrolled ? "text-slate-900" : "text-blue-600"}`}
+    >
+      Tech
+    </span>
+  </h1>
+  */}
+</Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
@@ -112,4 +138,19 @@ export function Navbar() {
       </AnimatePresence>
     </nav>
   );
+}
+
+
+
+{
+  /*
+    <div className="relative flex items-center justify-center 
+    w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 
+    rounded-xl 
+    shadow-md shadow-primary/20 
+    group-hover:shadow-lg group-hover:scale-105 
+    transition-all duration-300 overflow-hidden"
+  >
+
+  */
 }
