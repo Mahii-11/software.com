@@ -90,7 +90,7 @@ export function Hero() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-12 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all"
+              className="bg-slate-900 hover:bg-primary/90 text-white rounded-full px-8 h-12 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all"
               onClick={scrollToContact}
             >
               Start Project <ArrowRight className="ml-2 w-4 h-4" />

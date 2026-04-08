@@ -4,7 +4,7 @@ import { Hero } from "../components/Hero";
 import { Portfolio } from "../components/Portfolio";
 import { Services } from "../components/Services";
 import TrustedByLogos from "../components/TrustedByLogos";
-import TrustTeamSection from "../components/TrustTeamSection";
+
 
 
 function Home() {
@@ -15,7 +15,6 @@ function Home() {
       <Services />
       <About />
       <Portfolio />
-      <TrustTeamSection/>
       <CoreCapabilities/>  
     </div>
   );

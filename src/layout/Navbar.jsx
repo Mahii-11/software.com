@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
-import { Menu, X, Rocket } from "lucide-react";
+import { Link, useLocation } from "react-router";
+import { Menu, X } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,12 +9,15 @@ const navItems = [
   { name: "Services", href: "#services" },
   { name: "About", href: "#about" },
   { name: "Work", href: "#portfolio" },
+  { name: "Our Team", path: "/our-team" }, 
+  { name: "Mdia", path: "/media"},
   { name: "Contact", href: "#contact" },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,133 +27,170 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Menu bondho korar jonno escape key handle
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [mobileMenuOpen]);
+
   const scrollToSection = (e, href) => {
-    e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        setMobileMenuOpen(false);
+      }
+    } else {
       setMobileMenuOpen(false);
     }
   };
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all  duration-300 ${
-        isScrolled ? "bg-white shadow-sm border-b border-gray-100  py-4" : "bg-white/40 backdrop-blur-md border-b border-transparent py-6"
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+        isScrolled 
+          ? "bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 py-3" 
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-       <Link
-  href="/"
-  className="flex items-center gap-2 sm:gap-3 group cursor-pointer select-none"
->
-  {/* Logo Icon */}
-    <div
-  >
-    <img
-      src="/images/logo.png"
-      alt="BanglaTech Logo"
-      className="w-5 h-5 sm:w-6 sm:h-6 md:w-36 md:h-12 object-contain"
-    />
+      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
+        {/* Logo Section (Only in main navbar) */}
+        <Link
+          to="/"
+          className="relative z-[110] flex items-center gap-2 group cursor-pointer"
+        >
+          <img
+            src="/images/logo.png"
+            alt="BanglaTech Logo"
+            className="w-auto h-8 md:h-10 object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+        </Link>
 
-    {/* Glow Effect */}
-    <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 group-hover:opacity-100 transition duration-300"></div>
-  </div>
-
-  {/* Text 
-  <h1
-    className={`flex items-center font-bold tracking-tight 
-    text-lg sm:text-xl md:text-2xl 
-    transition-colors duration-300
-    ${isScrolled ? "text-indigo-600" : "text-slate-900"}`}
-  >
-    <span className="font-extrabold">Bangla</span>
-    <span
-      className={`ml-1 font-extrabold 
-      ${isScrolled ? "text-slate-900" : "text-blue-600"}`}
-    >
-      Tech
-    </span>
-  </h1>
-  */}
-</Link>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop Nav Items */}
+        <div className="hidden md:flex items-center gap-1">
           {navItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              onClick={(e) => scrollToSection(e, item.href)}
-               className={`text-sm font-medium transition-colors ${
-               isScrolled ? "text-slate-700 hover:text-indigo-600" : "text-slate-700 hover:text-indigo-600"
-               }`}
-            >
-              {item.name}
-            </a>
+            item.path ? (
+              <Link
+                key={item.name}
+                to={item.path}
+                className="px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 transition-all duration-300 rounded-lg hover:bg-slate-50"
+              >
+                {item.name}
+              </Link>
+            ) : (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => scrollToSection(e, item.href)}
+                className="px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 transition-all duration-300 rounded-lg hover:bg-slate-50"
+              >
+                {item.name}
+              </a>
+            )
           ))}
-          <Button
-            className="bg-primary hover:bg-primary/90 text-white rounded-full px-6"
-            onClick={(e) => scrollToSection(e, "#contact")}
-          >
-            Get Started
-          </Button>
+          
+          <div className="ml-4">
+            <Button
+              className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-7 shadow-md hover:shadow-indigo-200 transition-all duration-300"
+              onClick={(e) => scrollToSection(e, "#contact")}
+            >
+              Get Started
+            </Button>
+          </div>
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Menu Toggle Button (Visible always in main navbar) */}
         <button
-          className="md:hidden text-foreground p-2"
+          className="relative z-[110] md:hidden p-2 text-slate-900 focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle Menu"
         >
-          {mobileMenuOpen ? <X /> : <Menu />}
+          <Menu size={28} />
         </button>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Drawer Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-nav border-t border-white/5 overflow-hidden"
-          >
-            <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => scrollToSection(e, item.href)}
-                  className="text-lg font-medium text-white hover:text-primary transition-colors py-2"
+          <>
+            {/* Background Blur Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[101] md:hidden"
+            />
+
+            {/* Side Drawer Content */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 left-0 bottom-0 w-[75%] max-w-xs bg-white z-[102] shadow-2xl md:hidden flex flex-col p-8 pt-10"
+            >
+              {/* Top Drawer Header with Close Button, no logo */}
+              <div className="flex items-center justify-end mb-10">
+                <button 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 -mr-2 text-slate-600"
+                  aria-label="Close Menu"
                 >
-                  {item.name}
-                </a>
-              ))}
-              <Button
-                className="w-full bg-primary hover:bg-primary/90"
-                onClick={(e) => scrollToSection(e, "#contact")}
+                  <X size={24} />
+                </button>
+              </div>
+
+              {/* Menu Items with reduced size */}
+              <div className="flex flex-col gap-6">
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.1 + i * 0.1 }}
+                  >
+                    {item.path ? (
+                      <Link
+                        to={item.path}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-xl font-bold text-slate-900 hover:text-indigo-600 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        onClick={(e) => scrollToSection(e, item.href)}
+                        className="text-xl font-bold text-slate-900 hover:text-indigo-600 transition-colors"
+                      >
+                        {item.name}
+                      </a>
+                    )}
+                  </motion.div>
+                ))}
+                <motion.div 
+                className="mt-auto"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5 }}
               >
-                Get Started
-              </Button>
-            </div>
-          </motion.div>
+                <Button
+                  className="w-full bg-indigo-600 py-2 text-base rounded-xl shadow-md"
+                  onClick={(e) => scrollToSection(e, "#contact")}
+                >
+                  Get Started
+                </Button>
+              </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </nav>
   );
-}
-
-
-
-{
-  /*
-    <div className="relative flex items-center justify-center 
-    w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 
-    rounded-xl 
-    shadow-md shadow-primary/20 
-    group-hover:shadow-lg group-hover:scale-105 
-    transition-all duration-300 overflow-hidden"
-  >
-
-  */
 }

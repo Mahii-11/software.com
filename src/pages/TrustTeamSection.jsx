@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { Users, UserCheck, Sparkles, Clock, Speaker } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button";
 import { useEffect, useState } from "react";
 import { getFeatureData, getOurTeam } from "../services/api";
 import TeamSkeleton from "../loading/TeamSkeleton";

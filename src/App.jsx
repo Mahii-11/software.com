@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./pages/Home";
 import ApplayOut from "./layout/ApplayOut";
+import TrustTeamSection from "./pages/TrustTeamSection";
+import MediaPage from "./pages/MediaPage";
 
 const router = createBrowserRouter([
 
@@ -11,6 +13,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/our-team",
+        element: <TrustTeamSection />
+      }, 
+      {
+        path: "/media",
+        element: <MediaPage />
       }
     ]
   }

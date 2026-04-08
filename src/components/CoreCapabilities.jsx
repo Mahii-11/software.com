@@ -96,7 +96,16 @@ export default function CoreCapabilities() {
         </div>
 
         {/* Services Image Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div>
+           <div className="text-center mb-16">
+          <h2 className="font-display font-bold text-slate-900 text-3xl md:text-4xl mb-4">
+            Our <span className="text-gradient">Stories</span>
+          </h2>
+          <p className="text-slate-600 max-w-2xl mx-auto">
+            A journey of passion, innovation, and excellence in every project.
+          </p>
+        </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div
               key={index}
@@ -127,6 +136,7 @@ export default function CoreCapabilities() {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </section>

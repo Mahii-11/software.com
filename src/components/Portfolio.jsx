@@ -38,7 +38,7 @@ export function Portfolio() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
             <h2 className="font-display font-bold text-slate-900 text-3xl md:text-4xl mb-4">
-              Selected <span className="text-gradient">Works</span>
+              Our <span className="text-gradient">Works</span>
             </h2>
             <p className="text-slate-600">
               Explore some of our recent projects where design meets technology
