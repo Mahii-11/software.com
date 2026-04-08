@@ -57,7 +57,7 @@ export function Navbar() {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
+      <div className="max-w-[1460px] mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo Section (Only in main navbar) */}
         <Link
           to="/"
