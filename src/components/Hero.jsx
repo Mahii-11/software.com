@@ -27,10 +27,6 @@ const HeroTitleByPosition = ({ title, highlightIndex }) => {
 };
 
 
-
-
-
-
 export function Hero() {
   const [heroData, setHeroData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -159,26 +155,37 @@ export function Hero() {
               
               
               >
-                <img 
+            {/* 
+             <img 
                   src={heroData[0]?.image_two}
                   alt="Team Collaboration" 
                   className="w-full h-full object-cover rounded-[20px]
                   shadow-[0_40px_100px_rgba(0,0,0,0.15)] z-10"
                 />
+            */} 
+            <video
+                  src="/videos/hero.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster="/images/hero-main.jpg"
+                  className="w-full h-full object-cover rounded-[20px]"
+            ></video>
               </motion.div>
             </div>          
-        </div>
-    </motion.div>  
-      </div>
+            </div>
+        </motion.div>  
+           </div>
                <div className="absolute -bottom-52 sm:-bottom-48 left-1/2 -translate-x-1/2 
                 w-[140%] h-60 
                 bg-gradient-to-b from-white to-transparent
                 rounded-[100%]
                 shadow-[0_-20px_60px_rgba(0,0,0,0.06)]
                 pointer-events-none"></div>
- </section>
-  );
-}
+          </section>
+      );
+     }
 
 
 

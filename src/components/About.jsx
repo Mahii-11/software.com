@@ -76,7 +76,7 @@ function About() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            {/* Abstract visual representation of "Team" or "Code" */}
+            {/* Abstract visual representation of "Team" or "Code" 
             <div className="relative aspect-square max-w-[500px] mx-auto">
               <div className="absolute inset-0  border border-white/10 rounded-xl overflow-hidden shadow-xl">
                 <img
@@ -94,7 +94,19 @@ function About() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> 
+            */}
+
+              <video
+                  src="/videos/hero.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster="/images/hero-main.jpg"
+                  className="w-full h-full object-cover rounded-[20px]"
+            ></video>
+
           </motion.div>
         </div>
       </div>
@@ -103,3 +115,10 @@ function About() {
 }
 
 export default About;
+
+
+
+
+
+
+          
