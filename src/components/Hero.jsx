@@ -27,6 +27,10 @@ const HeroTitleByPosition = ({ title, highlightIndex }) => {
 };
 
 
+
+const isVideo = (url) => /\.(mp4|webm|ogg)/i.test(url?.split("?")[0]);
+
+
 export function Hero() {
   const [heroData, setHeroData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -155,23 +159,12 @@ export function Hero() {
               
               
               >
-            {/* 
-             <img 
+                 <Media
                   src={heroData[0]?.image_two}
-                  alt="Team Collaboration" 
-                  className="w-full h-full object-cover rounded-[20px]
-                  shadow-[0_40px_100px_rgba(0,0,0,0.15)] z-10"
-                />
-            */} 
-            <video
-                  src="/videos/hero.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  poster="/images/hero-main.jpg"
                   className="w-full h-full object-cover rounded-[20px]"
-            ></video>
+                  />
+                  
+
               </motion.div>
             </div>          
             </div>
@@ -187,6 +180,32 @@ export function Hero() {
       );
      }
 
+
+
+
+
+
+
+
+
+const Media = ({ src, className }) => {
+  if (!src) return null;
+
+  if (isVideo(src)) {
+    return (
+      <video
+        src={src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        className={className}
+      />
+    );
+  }
+
+  return <img src={src} className={className} alt="media" />;
+};
 
 
 

@@ -95,7 +95,7 @@ export default function CurvedTeam() {
     <div key={i} className="group text-center">
 
       {/* Card */}
-      <div className={`relative h-[360px] ${member.color} rounded-2xl overflow-hidden transition duration-300 group-hover:shadow-xl`}>
+      <div className={`relative h-[320px] ${member.color} rounded-2xl overflow-hidden transition duration-300 group-hover:shadow-xl`}>
 
         {/* Image wrapper */}
         <div className="absolute bottom-0 w-full flex justify-center">

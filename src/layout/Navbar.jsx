@@ -4,13 +4,14 @@ import { Link, useLocation } from "react-router";
 import { Menu, X } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
 
 const navItems = [
   { name: "Services", href: "#services" },
   { name: "About", href: "#about" },
   { name: "Work", href: "#portfolio" },
   { name: "Our Team", path: "/our-team" }, 
-  { name: "Mdia", path: "/media"},
+  { name: "Media", path: "/media"},
   { name: "Contact", href: "#contact" },
 ];
 
@@ -51,8 +52,8 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
-        isScrolled 
+      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-500 ${
+        isScrolled || mobileMenuOpen
           ? "bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 py-3" 
           : "bg-transparent py-5"
       }`}
@@ -114,6 +115,7 @@ export function Navbar() {
       </div>
 
       {/* Mobile Drawer Overlay */}
+      {createPortal(
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -123,7 +125,7 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[101] md:hidden"
+              className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[9998] md:hidden"
             />
 
             {/* Side Drawer Content */}
@@ -132,7 +134,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 left-0 bottom-0 w-[75%] max-w-xs bg-white z-[102] shadow-2xl md:hidden flex flex-col p-8 pt-10"
+              className="fixed top-0 left-0 bottom-0 w-[75%] max-w-xs bg-white z-[9999] shadow-2xl md:hidden flex flex-col p-8 pt-10"
             >
               {/* Top Drawer Header with Close Button, no logo */}
               <div className="flex items-center justify-end mb-10">
@@ -191,6 +193,8 @@ export function Navbar() {
           </>
         )}
       </AnimatePresence>
+      , document.body)}
+
     </nav>
   );
 }

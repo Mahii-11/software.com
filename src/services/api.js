@@ -53,4 +53,5 @@ export const getOurExpertise = () => fetchData("/expertise-data");
 export const getCapabilityData = () => fetchData("/capability-data");
 export const getServiceData = () => fetchData("/service-data");
 export const getFeatureData = () => fetchData("/feature-data");
+export const getMedia = () => fetchData("/media-data");
 

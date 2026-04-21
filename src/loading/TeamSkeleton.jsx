@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export default function TeamFancySkeleton() {
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 py-32">
       {[1, 2, 3, 4].map((_, i) => (
         <motion.div
           key={i}

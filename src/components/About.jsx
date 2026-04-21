@@ -34,10 +34,13 @@ function About() {
  const about = aboutData[0]; 
 
 
+   const mediaUrl = about?.image || "";
+   const isVideo = /\.(mp4|webm|ogg)$/i.test(
+   mediaUrl.split("?")[0]
+   );
 
-
-
-
+   console.log(mediaUrl)
+   console.log(isVideo)
 
 
 
@@ -69,45 +72,46 @@ function About() {
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
-            {/* Abstract visual representation of "Team" or "Code" 
-            <div className="relative aspect-square max-w-[500px] mx-auto">
-              <div className="absolute inset-0  border border-white/10 rounded-xl overflow-hidden shadow-xl">
-                <img
-                  src={about?.image}
-                  alt="Our Team"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                />
-
-                <div className="absolute inset-0  to-transparent flex items-end p-8">
-                  <div>
-                    <div className="text-2xl font-bold text-white mb-1">
-                      Our Studio
-                    </div>
-                    <p className="text-white/80">San Francisco, CA</p>
-                  </div>
-                </div>
-              </div>
-            </div> 
-            */}
-
-              <video
-                  src="/videos/hero.mp4"
+         <motion.div
+  initial={{ opacity: 0, scale: 0.9 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="relative"
+>
+  {isVideo ? (
+    <div className="relative aspect-square max-w-[500px] mx-auto rounded-xl overflow-hidden shadow-xl">
+      <video
                   autoPlay
-                  loop
                   muted
+                  loop
                   playsInline
-                  poster="/images/hero-main.jpg"
-                  className="w-full h-full object-cover rounded-[20px]"
-            ></video>
+                  className="w-full h-full object-cover"
+                >
+                  <source src={mediaUrl} type="video/mp4" />
+                </video>
+    </div>
+  ) : (
+    <div className="relative aspect-square max-w-[500px] mx-auto">
+      <div className="absolute inset-0 border border-white/10 rounded-xl overflow-hidden shadow-xl">
+        <img
+          src={mediaUrl}
+          alt="Our Team"
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+        />
 
-          </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+          <div>
+            <div className="text-2xl font-bold text-white mb-1">
+              Our Studio
+            </div>
+            <p className="text-white/80">San Francisco, CA</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</motion.div>
         </div>
       </div>
     </section>
