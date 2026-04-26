@@ -3,6 +3,8 @@ import Home from "./pages/Home";
 import ApplayOut from "./layout/ApplayOut";
 import TrustTeamSection from "./pages/TrustTeamSection";
 import MediaPage from "./pages/MediaPage";
+import { ContactForm } from "./pages/ContactForm";
+
 
 const router = createBrowserRouter([
 
@@ -21,7 +23,13 @@ const router = createBrowserRouter([
       {
         path: "/media",
         element: <MediaPage />
+      },
+
+      {
+        path: "/contact",
+        element: <ContactForm />
       }
+      
     ]
   }
 
