@@ -12,7 +12,7 @@ const navItems = [
   { name: "Work", href: "#portfolio" },
   { name: "Our Team", path: "/our-team" }, 
   { name: "Media", path: "/media"},
-  { name: "Contact", href: "#contact" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
