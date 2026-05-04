@@ -83,8 +83,8 @@ function About() {
     <div className="relative aspect-square max-w-[500px] mx-auto rounded-xl overflow-hidden shadow-xl">
       <video
                   autoPlay
-                  muted
                   loop
+                  muted
                   playsInline
                   className="w-full h-full object-cover"
                 >

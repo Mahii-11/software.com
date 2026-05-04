@@ -4,7 +4,7 @@ import { Button } from "../components/ui/button";
 import { getMedia } from "../services/api";
 import MediaSkeleton from "../loading/MediaSkeleton";
 
-const IMAGE_BASE = "https://backend.banglatechsolutionit.com/";
+//const IMAGE_BASE = "https://backend.banglatechsolutionit.com/";
 
 export default function MediaPage() {
   const [mediaData, setMediaData] = useState([]);
@@ -36,6 +36,10 @@ export default function MediaPage() {
 
   const featuredVideo = mediaData[0];
 
+
+  const fixImageUrl = (url) =>
+  url.replace(/ /g, "%20");
+
   if (loading) {
     return <MediaSkeleton />;
   }
@@ -65,7 +69,7 @@ export default function MediaPage() {
             className="relative rounded-2xl md:rounded-3xl overflow-hidden mb-14 md:mb-20 group cursor-pointer shadow-xl md:shadow-2xl shadow-indigo-100 border border-slate-100"
           >
             <img
-              src={IMAGE_BASE + featuredVideo.thumbnail}
+              src={fixImageUrl(featuredVideo.thumbnail)}
               alt="Featured"
               className="w-full h-[220px] sm:h-[300px] md:h-[450px] lg:h-[550px] object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -131,7 +135,7 @@ export default function MediaPage() {
             <div key={item.id} className="group cursor-pointer">
               <div className="relative aspect-video rounded-xl md:rounded-2xl overflow-hidden mb-3 md:mb-4 shadow-md border border-slate-100">
                 <img
-                  src={IMAGE_BASE + item.thumbnail}
+                  src={fixImageUrl(item.thumbnail)}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />

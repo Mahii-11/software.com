@@ -2,9 +2,13 @@
 import { motion } from "framer-motion";
 import { Button } from "../components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getHeroSectionData } from "../services/api";
 import HeroSkeleton from "../loading/HeroSkeleton";
+import { useAutoVideoController } from "../hooks/useAutoVideoController";
+
+
+
 
 const HeroTitleByPosition = ({ title, highlightIndex }) => {
   if (!title) return null;
@@ -34,7 +38,6 @@ const isVideo = (url) => /\.(mp4|webm|ogg)/i.test(url?.split("?")[0]);
 export function Hero() {
   const [heroData, setHeroData] = useState([]);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     const fetchHerData = async () => {
@@ -188,16 +191,18 @@ export function Hero() {
 
 
 
+
 const Media = ({ src, className }) => {
+  const { videoRef } = useAutoVideoController(0.6);
+
   if (!src) return null;
 
   if (isVideo(src)) {
     return (
       <video
+        ref={videoRef}
         src={src}
-        autoPlay
         loop
-        muted
         playsInline
         className={className}
       />
@@ -207,10 +212,7 @@ const Media = ({ src, className }) => {
   return <img src={src} className={className} alt="media" />;
 };
 
-
-
-
-
+export default Media;
 
 
 
