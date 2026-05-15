@@ -4,8 +4,76 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/Textarea";
 import { Send, Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
+import { useState } from "react";
+import { submitContactForm } from "../services/api";
 
 export function ContactForm() {
+
+   const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    name: "",
+    subject: "",
+    email: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  // input change
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const validate = () => {
+  if (!form.name || !form.email || !form.message) {
+    toast.error("All fields are required!");
+    return false;
+  }
+  return true;
+};
+
+  // submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validate()) return;
+
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("subject", form.subject);
+      formData.append("email", form.email);
+      formData.append("message", form.message);
+
+      const res = await submitContactForm(formData);
+
+      toast.success(res.message || "Message sent successfully!");
+
+      // reset form
+      setForm({ name: "", subject: "", email: "", message: "" });
+
+      // 🔥 auto close modal after 1s
+      setTimeout(() => {
+        navigate(-1);
+      }, 3000);
+    } catch (error) {
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 mt-12 sm:mt-16">
@@ -68,7 +136,7 @@ export function ContactForm() {
   viewport={{ once: true }}
   className="glass-card p-6 md:p-10 rounded-3xl shadow-xl"
 >
-  <form className="space-y-7">
+  <form className="space-y-7" onSubmit={handleSubmit} >
     
     {/* Name + Email */}
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -77,7 +145,11 @@ export function ContactForm() {
           Full Name
         </label>
         <Input
-          placeholder="John Doe"
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+           placeholder="John Doe"
            className="w-full bg-[#f8fafc] border border-[#dbeafe] rounded-xl px-4 py-3
            text-slate-700 placeholder:text-slate-400
            focus:outline-none focus:ring-2 focus:ring-[#93c5fd]
@@ -90,7 +162,11 @@ export function ContactForm() {
           Email Address
         </label>
         <Input
-          placeholder="john@example.com"
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+           placeholder="john@example.com"
            className="w-full bg-[#f8fafc] border border-[#dbeafe] rounded-xl px-4 py-3
            text-slate-700 placeholder:text-slate-400
            focus:outline-none focus:ring-2 focus:ring-[#93c5fd]
@@ -105,8 +181,11 @@ export function ContactForm() {
         Subject
       </label>
       <Input
-        placeholder="Project Inquiry"
-         className="w-full bg-[#f8fafc] border border-[#dbeafe] rounded-xl px-4 py-3
+          name="subject"
+          value={form.subject}
+          onChange={handleChange}
+          placeholder="Project Inquiry"
+          className="w-full bg-[#f8fafc] border border-[#dbeafe] rounded-xl px-4 py-3
            text-slate-700 placeholder:text-slate-400
            focus:outline-none focus:ring-2 focus:ring-[#93c5fd]
            focus:border-[#93c5fd] transition"
@@ -119,7 +198,11 @@ export function ContactForm() {
         Message
       </label>
       <Textarea
-        placeholder="Tell us about your project goals, timeline, and requirements..."
+       name="message"
+          value={form.message}
+         onChange={handleChange}
+         rows="4"
+         placeholder="Tell us about your project goals, timeline, and requirements..."
          className="w-full min-h-[160px] bg-[#f8fafc] border border-[#dbeafe] rounded-xl p-4
            text-slate-700 placeholder:text-slate-400 resize-none
            focus:outline-none focus:ring-2 focus:ring-[#93c5fd]
@@ -130,11 +213,12 @@ export function ContactForm() {
     {/* Button */}
     <Button
       type="submit"
+      disabled={loading}
       className="w-full h-12 text-base font-medium rounded-xl 
                  bg-gradient-to-r from-primary to-secondary 
                  hover:opacity-90 active:scale-[0.99] transition-all"
     >
-      Send Message
+       {loading ? "Sending..." : "Send Message"}
       <Send className="ml-2 w-4 h-4" />
     </Button>
   </form>

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router";
+import { Link } from "react-router";
 import { Menu, X } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,7 +18,7 @@ const navItems = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
+ // const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {

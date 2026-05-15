@@ -55,3 +55,23 @@ export const getServiceData = () => fetchData("/service-data");
 export const getFeatureData = () => fetchData("/feature-data");
 export const getMedia = () => fetchData("/media-data");
 
+
+
+
+//post request for contact form
+export const submitContactForm = async (formData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/store-contact`,
+      {
+        method: "POST",
+        body: formData, 
+      }
+    );
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
