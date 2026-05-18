@@ -4,6 +4,7 @@ import ApplayOut from "./layout/ApplayOut";
 import TrustTeamSection from "./pages/TrustTeamSection";
 import MediaPage from "./pages/MediaPage";
 import { ContactForm } from "./pages/ContactForm";
+import AdminInboxPage from "./features/live-chat/pages/AdminInboxPage";
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactForm />
+      },
+      {
+        path: "/admin/inbox",
+        element: <AdminInboxPage />
       }
       
     ]

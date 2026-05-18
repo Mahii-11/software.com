@@ -1,0 +1,78 @@
+{
+  "conv-widget": [
+    {
+      "id": "msg-1",
+      "conversationId": "conv-widget",
+      "senderId": "agent-1",
+      "senderType": "agent",
+      "content": "Hi there! 👋 Welcome to Software Co support. I'm Sarah — how can I help you today?",
+      "type": "text",
+      "status": "read",
+      "createdAt": "2026-05-18T15:00:00Z"
+    },
+    {
+      "id": "msg-2",
+      "conversationId": "conv-widget",
+      "senderId": "visitor",
+      "senderType": "visitor",
+      "content": "Hey! I'm interested in your live chat product for our SaaS.",
+      "type": "text",
+      "status": "read",
+      "createdAt": "2026-05-18T15:01:30Z"
+    },
+    {
+      "id": "msg-3",
+      "conversationId": "conv-widget",
+      "senderId": "agent-1",
+      "senderType": "agent",
+      "content": "Great choice! We offer widget embedding, admin inbox, and Laravel-ready APIs. Would you like a quick overview or pricing details?",
+      "type": "text",
+      "status": "delivered",
+      "createdAt": "2026-05-18T15:02:00Z"
+    }
+  ],
+  "conv-2": [
+    {
+      "id": "c2-msg-1",
+      "conversationId": "conv-2",
+      "senderId": "cust-2",
+      "senderType": "visitor",
+      "content": "Is there a way to customize the widget colors?",
+      "type": "text",
+      "status": "read",
+      "createdAt": "2026-05-18T14:55:00Z"
+    },
+    {
+      "id": "c2-msg-2",
+      "conversationId": "conv-2",
+      "senderId": "agent-1",
+      "senderType": "agent",
+      "content": "Absolutely! You can pass theme tokens via the dashboard or CSS variables. I can send you the theming guide.",
+      "type": "text",
+      "status": "delivered",
+      "createdAt": "2026-05-18T14:58:00Z"
+    }
+  ],
+  "conv-5": [
+    {
+      "id": "c5-msg-1",
+      "conversationId": "conv-5",
+      "senderId": "cust-5",
+      "senderType": "visitor",
+      "content": "Urgent: production webhook failing since 2pm EST",
+      "type": "text",
+      "status": "read",
+      "createdAt": "2026-05-18T15:20:00Z"
+    },
+    {
+      "id": "c5-msg-2",
+      "conversationId": "conv-5",
+      "senderId": "agent-1",
+      "senderType": "agent",
+      "content": "I'm on it. Can you share the webhook endpoint ID from your dashboard?",
+      "type": "text",
+      "status": "sent",
+      "createdAt": "2026-05-18T15:22:00Z"
+    }
+  ]
+}

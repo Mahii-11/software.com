@@ -1,0 +1,18 @@
+[
+  {
+    "id": "agent-1",
+    "name": "Sarah Chen",
+    "role": "Senior Support Specialist",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+    "status": "online",
+    "bio": "Here to help with billing, integrations, and technical questions."
+  },
+  {
+    "id": "agent-2",
+    "name": "Marcus Webb",
+    "role": "Solutions Engineer",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus",
+    "status": "away",
+    "bio": "Specializes in API setup and enterprise deployments."
+  }
+]

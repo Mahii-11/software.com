@@ -1,0 +1,22 @@
+[
+  {
+    "id": "faq-1",
+    "question": "How do I integrate the chat widget?",
+    "answer": "Add our script tag to your site or install the React package. Full docs are in the developer portal."
+  },
+  {
+    "id": "faq-2",
+    "question": "What are your support hours?",
+    "answer": "AI assistant is 24/7. Human agents are available Mon–Fri, 9am–6pm EST."
+  },
+  {
+    "id": "faq-3",
+    "question": "Can I export conversation history?",
+    "answer": "Yes — admins can export from Settings → Conversations → Export (CSV or JSON)."
+  },
+  {
+    "id": "faq-4",
+    "question": "Do you offer SSO?",
+    "answer": "Enterprise plans include SAML and OIDC SSO. Contact sales for setup."
+  }
+]

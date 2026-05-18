@@ -1,0 +1,67 @@
+[
+  {
+    "id": "cust-1",
+    "name": "Alex Rivera",
+    "email": "alex@acmecorp.com",
+    "company": "Acme Corp",
+    "plan": "Pro",
+    "location": "Austin, TX",
+    "timezone": "America/Chicago",
+    "joinedAt": "2025-11-12",
+    "lifetimeValue": 4800,
+    "tags": ["power-user", "api"],
+    "notes": "Prefers email follow-ups. Integrating Stripe webhooks."
+  },
+  {
+    "id": "cust-2",
+    "name": "Jordan Kim",
+    "email": "jordan@startup.io",
+    "company": "Startup.io",
+    "plan": "Starter",
+    "location": "San Francisco, CA",
+    "timezone": "America/Los_Angeles",
+    "joinedAt": "2026-02-03",
+    "lifetimeValue": 299,
+    "tags": ["trial"],
+    "notes": "Evaluating widget customization options."
+  },
+  {
+    "id": "cust-3",
+    "name": "Taylor Brooks",
+    "email": "taylor@design.co",
+    "company": "Design Co",
+    "plan": "Enterprise",
+    "location": "London, UK",
+    "timezone": "Europe/London",
+    "joinedAt": "2024-08-20",
+    "lifetimeValue": 24000,
+    "tags": ["enterprise", "sales"],
+    "notes": "Enterprise evaluation in progress. Decision by Q3."
+  },
+  {
+    "id": "cust-4",
+    "name": "Morgan Lee",
+    "email": "morgan@saas.dev",
+    "company": "SaaS Dev",
+    "plan": "Pro",
+    "location": "Toronto, CA",
+    "timezone": "America/Toronto",
+    "joinedAt": "2025-06-15",
+    "lifetimeValue": 1200,
+    "tags": ["developer"],
+    "notes": "Technical user — appreciates code snippets."
+  },
+  {
+    "id": "cust-5",
+    "name": "Casey Nguyen",
+    "email": "casey@fintech.app",
+    "company": "FinTech App",
+    "plan": "Pro",
+    "location": "New York, NY",
+    "timezone": "America/New_York",
+    "joinedAt": "2025-09-01",
+    "lifetimeValue": 3600,
+    "tags": ["urgent", "webhooks"],
+    "notes": "Production issues — prioritize response time."
+  }
+]

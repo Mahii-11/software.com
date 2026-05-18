@@ -2,6 +2,7 @@ import { Outlet } from 'react-router'
 import { Navbar } from './Navbar'
 import Footer from './Footer'
 import { Toaster } from "react-hot-toast";
+import { LiveChatWidget } from "../features/live-chat";
 
 export default function ApplayOut() {
   return (
@@ -23,6 +24,7 @@ export default function ApplayOut() {
         <Outlet />
       </main>
       <Footer/>
+      <LiveChatWidget />
     </div>
   )
 }
