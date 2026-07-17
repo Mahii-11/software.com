@@ -118,7 +118,7 @@ export default function MediaPage() {
               </button>
             ))}
           </div>
-
+           {/* 
           <div className="relative w-full md:w-72">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <input
@@ -126,13 +126,17 @@ export default function MediaPage() {
               placeholder="Search videos..."
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-indigo-50 focus:border-indigo-400 transition-all"
             />
-          </div>
+          </div>*/}
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {filteredMedia.map((item) => (
-            <div key={item.id} className="group cursor-pointer">
+            <div
+              onClick={() => setSelectedVideo(item)}
+              key={item.id}
+              className="group cursor-pointer"
+            >
               <div className="relative aspect-video rounded-xl md:rounded-2xl overflow-hidden mb-3 md:mb-4 shadow-md border border-slate-100">
                 <img
                   src={fixImageUrl(item.thumbnail)}
@@ -164,7 +168,7 @@ export default function MediaPage() {
           ))}
         </div>
 
-        {/* Subscribe */}
+        {/* Subscribe 
         <div className="mt-16 md:mt-20 text-center border-t border-slate-100 pt-12 md:pt-16">
           <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">
             Want to see more content?
@@ -184,8 +188,9 @@ export default function MediaPage() {
               Subscribe
             </Button>
           </div>
-        </div>
+        </div>*/}
       </div>
+      
 
       {/* Modal */}
       {selectedVideo && (

@@ -161,14 +161,7 @@ export default function CurvedTeam() {
 
       <TrustFeatures />
 
-      <div className="text-center mt-16">
-        <h1 className="text-gray-800 mb-10 text-2xl">
-          Crafting <span className="text-gradient">Your Dream </span> Squad.
-        </h1>
-        <Button size="lg" variant="outline" className="text-white bg-indigo-600 hover:bg-indigo-700 transition">
-          Hire The Best Team
-        </Button>
-      </div>
+    
     </section>
   );
 }
@@ -213,8 +206,9 @@ export default function CurvedTeam() {
       try {
         setLoading(true);
         const res = await getFeatureData();
-        const normalized = normalizeFeatures(res.data.data);
+        const normalized = normalizeFeatures(res);
         setFeatures(normalized);
+        console.log(normalized);
       } catch (error) {
         console.error("Error fetching features:", error);
       } finally {

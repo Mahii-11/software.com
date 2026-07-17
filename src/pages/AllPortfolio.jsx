@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getSelectedData } from "../services/api";
+import { getAllProjects } from "../services/api";
 import PortfolioSkeleton from "../loading/PortfolioSkeleton";
-import { Link } from "react-router";
 
 
-export function Portfolio() {
+export function AllPortfolio() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +16,7 @@ export function Portfolio() {
     const fetchProjects = async () => {
       try {
         setLoading(true);
-        const data = await getSelectedData();
+        const data = await getAllProjects();
         setProjects(data);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -34,7 +33,7 @@ export function Portfolio() {
 
 
   return (
-    <section id="portfolio" className="py-8 bg-gradient-to-b from-white to-gray-50">
+    <section  className="mt-26 pt-24 pb-24 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
@@ -46,13 +45,6 @@ export function Portfolio() {
               to solve real business problems.
             </p>
           </div>
-          <Link to="/portfolio">
-           <Button variant="outline" 
-           className="rounded-full border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-300"
-          >
-            View All Projects
-          </Button>
-          </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (

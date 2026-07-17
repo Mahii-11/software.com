@@ -17,6 +17,7 @@ function About() {
       try {
         setLoading(true);
         const data = await getWhoWeAre();
+        console.log("who we ", data);
         setAboutData(data);
       } catch (err) {
         console.error("Error fetching about data:", err);
@@ -45,7 +46,7 @@ function About() {
 
 
   return (
-    <section id="about" className="py-24 bg-white">
+    <section id="about" className="py-8 md:py-12 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -58,9 +59,12 @@ function About() {
               Who <span className="text-gradient">We Are</span>
             </h2>
                <div className="space-y-6 text-lg text-slate-700 leading-relaxed mb-7">
-                 {about?.description?.split(/\n+/).map((para, idx) => (
-                 <p key={idx}>{para}</p>
-             ))}
+              <div
+                 className="space-y-6 text-lg text-slate-700 leading-relaxed mb-7"
+                 dangerouslySetInnerHTML={{
+                  __html: about?.description || "",
+                }}
+                />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {about?.items?.map((item, i) => (

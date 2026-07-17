@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import CoreCapabilitiesSkeleton from "../loading/CoreCapabilitiesSkeleton";
 import { getCapabilityData, getServiceData } from "../services/api";
+import { Link } from "react-router";
 
 
 
@@ -57,11 +58,11 @@ export default function CoreCapabilities() {
 
 
   return (
-    <section className="bg-gradient-to-br from-gray-50 via-white to-blue-50 py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-gradient-to-br from-gray-50 via-white to-blue-50 py-8 px-6">
+      <div className="max-w-5xl mx-auto">
         
         {/* Top Section */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-12">
           
           {/* Left Content */}
           <div>
@@ -78,10 +79,12 @@ export default function CoreCapabilities() {
              {data?.short_description}
             </p>
 
-            <button className="inline-flex items-center gap-2 bg-blue-600 text-white px-7 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition">
+            <Link to="/services">
+             <button className="inline-flex items-center gap-2 bg-blue-600 text-white px-7 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition">
               Explore All Services
               <ArrowRight size={18} />
             </button>
+            </Link>
           </div>
 
           {/* Right Image */}
@@ -97,8 +100,8 @@ export default function CoreCapabilities() {
 
         {/* Services Image Cards */}
         <div>
-           <div className="text-center mb-16">
-          <h2 className="font-display font-bold text-slate-900 text-3xl md:text-4xl mb-4">
+           <div className="text-center mb-10">
+          <h2 className="font-display font-bold text-slate-900 text-3xl md:text-4xl mb-2">
             Our <span className="text-gradient">Stories</span>
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto">
@@ -129,10 +132,12 @@ export default function CoreCapabilities() {
                 <p className="text-sm mb-4 opacity-90">
                   {service.short_description}
                 </p>
-                <div className="flex items-center gap-2 text-blue-300 group-hover:gap-3 transition-all">
+                <Link to={`/story/${service.id}`} className="inline-flex items-center gap-2 text-blue-300 group-hover:gap-3 transition-all">
+                  <div className="flex items-center gap-2 text-blue-300 group-hover:gap-3 transition-all">
                   Learn More
                   <ArrowRight size={16} />
                 </div>
+                </Link>
               </div>
             </div>
           ))}

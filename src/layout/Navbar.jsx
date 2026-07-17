@@ -7,12 +7,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 
 const navItems = [
-  { name: "Services", href: "#services" },
-  { name: "About", href: "#about" },
-  { name: "Work", href: "#portfolio" },
+  { name: "Services", href: "/services" },
+  { name: "About", href: "/about" },
+  { name: "Work", href: "/portfolio" },
   { name: "Our Team", path: "/our-team" }, 
   { name: "Media", path: "/media"},
-  { name: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
@@ -95,12 +94,16 @@ export function Navbar() {
           ))}
           
           <div className="ml-4">
-            <Button
-              className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-7 shadow-md hover:shadow-indigo-200 transition-all duration-300"
-              onClick={(e) => scrollToSection(e, "#contact")}
+            <Link
+            to="/contact"
             >
-              Get Started
+             <Button
+              className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-7 shadow-md hover:shadow-indigo-200 transition-all duration-300"
+              
+            >
+              Contact
             </Button>
+            </Link>
           </div>
         </div>
 

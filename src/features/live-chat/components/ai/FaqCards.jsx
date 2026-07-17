@@ -1,14 +1,33 @@
 import { motion as Motion } from "framer-motion";
 import { ChevronRight, HelpCircle } from "lucide-react";
-import { useFaqs } from "../../hooks/useConversations";
+import { useEffect, useState } from "react";
+import { chatApi } from "../../services/api/chatApi";
 import { useChatStore } from "../../store/chatStore";
 
 export function FaqCards() {
-  const { data: faqs = [], isLoading } = useFaqs();
+  const [faqs, setFaqs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const sendMessage = useChatStore((s) => s.sendMessage);
+
+  useEffect(() => {
+    const loadFaqs = async () => {
+      try {
+        const data = await chatApi.getFaqs();
+        setFaqs(data || []);
+      } catch (error) {
+        console.error("Failed to load FAQs", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadFaqs();
+  }, []);
 
   const handleFaq = async (faq) => {
     await sendMessage(faq.question);
+
     useChatStore.getState().addMessage({
       id: `faq-ans-${faq.id}`,
       conversationId: useChatStore.getState().conversationId,
@@ -25,7 +44,10 @@ export function FaqCards() {
     return (
       <div className="px-4 py-3 space-y-2">
         {[1, 2].map((i) => (
-          <div key={i} className="h-14 rounded-xl bg-white/5 animate-pulse" />
+          <div
+            key={i}
+            className="h-14 rounded-xl bg-white/5 animate-pulse"
+          />
         ))}
       </div>
     );
@@ -41,6 +63,7 @@ export function FaqCards() {
         <HelpCircle className="h-3 w-3" />
         <span>Popular questions</span>
       </div>
+
       <div className="space-y-2 max-h-36 overflow-y-auto chat-scrollbar">
         {faqs.slice(0, 3).map((faq, i) => (
           <Motion.button
@@ -55,6 +78,7 @@ export function FaqCards() {
             <span className="flex-1 text-xs font-medium leading-snug">
               {faq.question}
             </span>
+
             <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
           </Motion.button>
         ))}

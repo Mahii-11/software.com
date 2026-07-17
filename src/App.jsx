@@ -4,7 +4,12 @@ import ApplayOut from "./layout/ApplayOut";
 import TrustTeamSection from "./pages/TrustTeamSection";
 import MediaPage from "./pages/MediaPage";
 import { ContactForm } from "./pages/ContactForm";
-import AdminInboxPage from "./features/live-chat/pages/AdminInboxPage";
+import ServicesPage from "./pages/ServicesPage";
+import { AllPortfolio } from "./pages/AllPortfolio";
+import StoryPage from "./pages/StoryPage";
+import AboutPage from "./pages/AboutPage";
+import UltraPremiumSection from "./pages/UltraPremiumSection";
+
 
 
 const router = createBrowserRouter([
@@ -30,9 +35,29 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <ContactForm />
       },
+
       {
-        path: "/admin/inbox",
-        element: <AdminInboxPage />
+        path: "/services",
+        element: <ServicesPage />
+      },
+      
+      {
+        path: "/portfolio",
+        element: <AllPortfolio />
+      }, 
+      {
+        path: "/story/:id",
+        element: <StoryPage />
+      }, 
+
+      {
+        path: "/about",
+        element: <AboutPage />
+      },
+
+      {
+        path: "/start-project",
+        element: <UltraPremiumSection />
       }
       
     ]

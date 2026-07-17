@@ -1,15 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { getLeadingCompanies } from "../services/api";
+import TrustedBySkeleton from "../loading/TrustedBySkeleton";
 
-const techs = [
-  { logo: "/images/amazon.png", name: "Amazon" },
-  { logo: "/images/bjit.png", name: "BJIT" },
-  { logo: "/images/data-soft.png", name: "DataSoft Systems" },
-  { logo: "/images/google.png", name: "Google" },
-  { logo: "/images/Grameenphone.png", name: "Grameenphone IT Limited" },
-  { logo: "/images/meta.png", name: "Meta Platforms" },
-  { logo: "/images/microsoft.png", name: "Microsoft" },
-  { logo: "/images/Robi.png", name: "Robi Axiata Ltd" },
-];
 
 const cardGradients = [
   "from-blue-500/10 to-indigo-500/10 border-blue-200/60",
@@ -34,14 +26,15 @@ const badgeColors = [
 ];
 
 function LogoCard({ tech, index }) {
+
   const colorIdx = index % cardGradients.length;
   return (
     <div className={`group flex flex-col items-center justify-center gap-3 mx-3 px-8 py-6 rounded-2xl border bg-gradient-to-br ${cardGradients[colorIdx]} hover:scale-105 hover:shadow-xl transition-all duration-300 min-w-[160px] flex-shrink-0 cursor-default select-none`}>
-      <div className="h-9 w-32 flex items-center justify-center">
+      <div className="h-8 w-24 flex items-center justify-center">
         <img
-          src={tech.logo}
+          src={tech.image}
           alt={tech.name}
-          className="h-full w-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+          className="h-full w-full object-contain  transition-all duration-300"
           onError={(e) => {
             const img = e.currentTarget;
             img.style.display = "none";
@@ -53,14 +46,14 @@ function LogoCard({ tech, index }) {
           {tech.name.slice(0, 2).toUpperCase()}
         </div>
       </div>
-      <span className="text-[11px] font-bold text-gray-500 group-hover:text-gray-800 text-center whitespace-nowrap transition-colors duration-300 tracking-widest uppercase">
+      <span className="text-[11px] font-bold text-gray-800 text-center whitespace-nowrap transition-colors duration-300 tracking-widest uppercase">
         {tech.name}
       </span>
     </div>
   );
 }
 
-function Marquee() {
+function Marquee({techs}) {
   const trackRef = useRef(null);
   const posRef = useRef(0);
   const rafRef = useRef(0);
@@ -69,7 +62,7 @@ function Marquee() {
     const track = trackRef.current;
     if (!track) return;
 
-    const SPEED = 1.2; // pixels per frame
+    const SPEED = 1.2; 
 
     const animate = () => {
       posRef.current += SPEED;
@@ -94,8 +87,34 @@ function Marquee() {
 }
 
 export default function TrustedBySection() {
+
+  const [techs, setTechs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+
+    const loadTech = async () => {
+      try {
+        setLoading(true);
+        const data = await getLeadingCompanies()
+        setTechs(data);
+      } catch (error) {
+        console.error("Error fetching leading companies:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadTech();
+  }, [])
+
+  if (loading) {
+    return <TrustedBySkeleton />
+  }
+
   return (
-    <section className="w-full bg-white py-16 px-0 overflow-hidden">
+    <section className="w-full bg-white py-4 px-0 overflow-hidden">
       <div className="text-center px-6 mb-10">
         <p className="text-xs font-semibold tracking-[0.2em] text-blue-500 uppercase mb-2">
           Our Partners
@@ -114,7 +133,7 @@ export default function TrustedBySection() {
       <div className="relative w-full overflow-hidden">
         <div className="pointer-events-none absolute left-0 top-0 h-full w-20 z-10 bg-gradient-to-r from-white to-transparent" />
         <div className="pointer-events-none absolute right-0 top-0 h-full w-20 z-10 bg-gradient-to-l from-white to-transparent" />
-        <Marquee />
+        <Marquee techs={techs} />
       </div>
     </section>
   );

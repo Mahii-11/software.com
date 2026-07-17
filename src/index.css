@@ -70,7 +70,7 @@
   }
 
   .glass-card {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-xl;
+    @apply cursor-pointer transition-colors duration-500 ease-out  md:min-h-0 backdrop-blur-md border border-white/10 shadow-xl;
   }
 
   .glass-nav {
@@ -85,4 +85,9 @@
   .transform-style-3d {
     transform-style: preserve-3d;
   }
+}
+
+
+html {
+  scroll-behavior: smooth;
 }

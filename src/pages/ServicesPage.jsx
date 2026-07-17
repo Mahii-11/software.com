@@ -9,12 +9,10 @@ import {
   Database,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getOurExpertise } from "../services/api";
+import { getAllServices } from "../services/api";
 import ServicesSkeleton from "../loading/ServicesSkeleton";
 
 const serviceConfig = [
-
-  
   {
     icon: Monitor,
     color: "text-blue-400",
@@ -56,49 +54,47 @@ const serviceConfig = [
 
 
 
-
-export function Services() {
-  const [servicesData, setServicesData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        setLoading(true);
-        const data = await getOurExpertise();
-        setServicesData(data);
-      } catch (err) {
-        console.error("Error fetching services data:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchServices();
-  },[]);
-
-
-  const normalizedServices = servicesData.map((item, index) => ({
-  title: item.title,
-  description: item.short_description,
-
-  // static design part
-  icon: serviceConfig[index % serviceConfig.length].icon,
-  color: serviceConfig[index % serviceConfig.length].color,
-  bg: serviceConfig[index % serviceConfig.length].bg,
-  hoverColor: serviceConfig[index % serviceConfig.length].hoverColor,
-}));
-
-
-    if (loading) return <ServicesSkeleton/>;
-
-
-
-
-
-
-
+export default function ServicesPage() {
+     const [servicesData, setServicesData] = useState([]);
+      const [loading, setLoading] = useState(true);
+    
+      useEffect(() => {
+        const fetchServices = async () => {
+          try {
+            setLoading(true);
+            const data = await getAllServices();
+            setServicesData(data);
+          } catch (err) {
+            console.error("Error fetching services data:", err);
+          } finally {
+            setLoading(false);
+          }
+        }
+        fetchServices();
+      },[]);
+    
+    
+      const normalizedServices = servicesData.map((item, index) => ({
+      title: item.title,
+      description: item.short_description,
+    
+      // static design part
+      icon: serviceConfig[index % serviceConfig.length].icon,
+      color: serviceConfig[index % serviceConfig.length].color,
+      bg: serviceConfig[index % serviceConfig.length].bg,
+      hoverColor: serviceConfig[index % serviceConfig.length].hoverColor,
+    }));
+    
+    
+        if (loading) return <ServicesSkeleton/>;
+    
+    
+    
+    
+    
+    
   return (
-    <section id="services" className="py-12 relative bg-white">
+       <section  className="relative bg-white mt-28 pb-20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <h2 className="font-display font-bold text-slate-900 text-3xl md:text-4xl mb-4">
@@ -136,5 +132,5 @@ export function Services() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -64,46 +64,113 @@ export const useChatStore = create((set, get) => ({
   setPendingAttachment: (file) => set({ pendingAttachment: file }),
   incrementUnread: () => set((s) => ({ unreadCount: s.unreadCount + 1 })),
 
-  sendMessage: async (content, type = "text") => {
-    const { conversationId, pendingAttachment } = get();
-    const optimistic = {
-      id: `temp-${Date.now()}`,
+sendMessage: async (content, type = "text") => {
+
+  const { conversationId, pendingAttachment } = get();
+
+  // Optimistic visitor message
+  const optimistic = {
+    id: `temp-${Date.now()}`,
+    conversationId,
+
+    senderId: "visitor",
+    senderType: "visitor",
+
+    content,
+    type,
+
+    status: "sending",
+
+    createdAt: new Date().toISOString(),
+
+    attachment: pendingAttachment,
+  };
+
+  // Instantly show visitor message
+  set((s) => ({
+    messages: [...s.messages, optimistic],
+
+    pendingAttachment: null,
+    showEmojiPicker: false,
+
+    isAiTyping: true,
+  }));
+
+  try {
+
+    // API CALL
+    const response = await chatApi.sendMessage(
       conversationId,
-      senderId: "visitor",
-      senderType: "visitor",
-      content,
-      type,
-      status: "sending",
-      createdAt: new Date().toISOString(),
-      attachment: pendingAttachment,
-    };
-
-    set((s) => ({
-      messages: [...s.messages, optimistic],
-      pendingAttachment: null,
-      showEmojiPicker: false,
-    }));
-
-    try {
-      const saved = await chatApi.sendMessage(conversationId, {
+      {
         content,
         type,
         attachment: pendingAttachment,
-      });
-      set((s) => ({
-        messages: s.messages.map((m) =>
-          m.id === optimistic.id ? { ...saved, status: "delivered" } : m
-        ),
-      }));
-      return saved;
-    } catch {
-      set((s) => ({
-        messages: s.messages.map((m) =>
-          m.id === optimistic.id ? { ...m, status: "failed" } : m
-        ),
-      }));
-    }
-  },
+      }
+    );
+
+    console.log("API RESPONSE:", response);
+
+    // Replace optimistic message status
+    set((s) => ({
+      messages: s.messages.map((m) =>
+        m.id === optimistic.id
+          ? {
+              ...m,
+              status: "delivered",
+            }
+          : m
+      ),
+    }));
+
+    // Create AI message manually
+    const aiMessage = {
+      id: `ai-${Date.now()}`,
+
+      conversationId,
+
+      senderId: "ai",
+      senderType: "ai",
+
+      content: response.data.content,
+
+      type: "text",
+
+      status: "delivered",
+
+      createdAt: new Date().toISOString(),
+    };
+
+    // Add AI reply into UI
+    set((s) => ({
+      messages: [...s.messages, aiMessage],
+    }));
+
+    // Stop typing
+    set({
+      isAiTyping: false,
+    });
+
+    return response;
+
+  } catch (error) {
+
+    console.error(error);
+
+    // Failed message state
+    set((s) => ({
+      messages: s.messages.map((m) =>
+        m.id === optimistic.id
+          ? {
+              ...m,
+              status: "failed",
+            }
+          : m
+      ),
+
+      isAiTyping: false,
+    }));
+  }
+},
 
   loadAgent: async () => {
     const agents = await chatApi.getAgents();

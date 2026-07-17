@@ -45,15 +45,20 @@ export const fetchData = async (endpoint, options = {}) => {
 
 
 
-export const getHeroSectionData = () => fetchData("/hero-section-data");
-export const getWhoWeAre = () => fetchData("/identity-data");
-export const getSelectedData = () => fetchData("/project-data");
-export const getOurTeam = () => fetchData("/our-team-data");
-export const getOurExpertise = () => fetchData("/expertise-data");
-export const getCapabilityData = () => fetchData("/capability-data");
+export const getHeroSectionData = () => fetchData("/hero-section-index-api");
+export const getWhoWeAre = () => fetchData("/who-we-index-api");
+export const getSelectedData = () => fetchData("/our-works-index-api");
+export const getOurTeam = () => fetchData("/our-team-index-api");
+export const getOurExpertise = () => fetchData("/services-index-api");
+export const getCapabilityData = () => fetchData("/capability-index-api");
 export const getServiceData = () => fetchData("/service-data");
 export const getFeatureData = () => fetchData("/feature-data");
-export const getMedia = () => fetchData("/media-data");
+export const getMedia = () => fetchData("/media-index-api");
+export const getAllServices = () => fetchData("/all-service-data");
+export const getAllProjects = () => fetchData("/all-project-data");
+export const getLeadingCompanies = () => fetchData("/our-partner-data");
+export const getSingleStory = (id) =>
+  fetchData(`/single-story-data/${id}`);
 
 
 

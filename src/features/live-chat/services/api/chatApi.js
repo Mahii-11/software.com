@@ -1,10 +1,12 @@
 import { chatEnv } from "../../config/env";
-import mockAgents from "../../data/mockAgents.json";
-import mockConversations from "../../data/mockConversations.json";
+//import mockConversations from "../../data/mockConversations.json";
 import mockMessages from "../../data/mockMessages.json";
 import mockFaqs from "../../data/mockFaqs.json";
-import mockCustomers from "../../data/mockCustomers.json";
-import mockAnalytics from "../../data/mockAnalytics.json";
+//import mockCustomers from "../../data/mockCustomers.json";
+//import mockAnalytics from "../../data/mockAnalytics.json";
+const BASE_URL = "https://backend.banglatechsolutionit.com/api";
+
+
 
 const delay = (ms = 400) => new Promise((r) => setTimeout(r, ms));
 
@@ -15,33 +17,18 @@ const delay = (ms = 400) => new Promise((r) => setTimeout(r, ms));
 export const chatApi = {
   /** GET /chat/agents */
   async getAgents() {
-    if (chatEnv.mockMode) {
-      await delay();
-      return mockAgents;
-    }
-    // return httpClient("/chat/agents");
-    return mockAgents;
-  },
 
-  /** GET /chat/conversations */
-  async getConversations(params = {}) {
-    if (chatEnv.mockMode) {
-      await delay(300);
-      let list = [...mockConversations];
-      if (params.status) list = list.filter((c) => c.status === params.status);
-      if (params.search) {
-        const q = params.search.toLowerCase();
-        list = list.filter(
-          (c) =>
-            c.customerName.toLowerCase().includes(q) ||
-            c.lastMessage.toLowerCase().includes(q)
-        );
-      }
-      return list;
-    }
-    // return httpClient(`/chat/conversations?${new URLSearchParams(params)}`);
-    return mockConversations;
-  },
+  const res = await fetch(`${BASE_URL}/chat-agent-data`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch agents");
+  }
+
+  const data = await res.json();
+
+  return data.data.data;
+},
+
 
   /** GET /chat/conversations/:id/messages */
   async getMessages(conversationId) {
@@ -54,28 +41,48 @@ export const chatApi = {
   },
 
   /** POST /chat/conversations/:id/messages */
-  async sendMessage(conversationId, payload) {
-    if (chatEnv.mockMode) {
-      await delay(200);
-      return {
-        id: `msg-${Date.now()}`,
-        conversationId,
-        senderId: "visitor",
-        senderType: "visitor",
-        content: payload.content,
-        type: payload.type ?? "text",
-        status: "sent",
-        createdAt: new Date().toISOString(),
-        attachment: payload.attachment ?? null,
-      };
-    }
-    // return httpClient(`/chat/conversations/${conversationId}/messages`, {
-    //   method: "POST",
-    //   body: JSON.stringify(payload),
-    // });
-    return null;
-  },
+async sendMessage(conversationId, payload) {
 
+  const res = await fetch(`${BASE_URL}/live-chat`, {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
+      conversation_id: conversationId,
+      message: payload.content,
+      type: payload.type ?? "text",
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to send message");
+  }
+
+  const data = await res.json();
+
+  // Transform backend response → frontend message object
+  return {
+    success: data.success,
+
+    data: {
+      id: `msg-${Date.now()}`,
+      conversationId,
+
+      senderId: "ai",
+      senderType: "ai",
+
+      content: data.reply,
+
+      type: "text",
+      status: "delivered",
+
+      createdAt: new Date().toISOString(),
+    },
+  };
+},
   /** GET /chat/faqs */
   async getFaqs() {
     if (chatEnv.mockMode) {
@@ -86,25 +93,7 @@ export const chatApi = {
     return mockFaqs;
   },
 
-  /** GET /chat/customers/:id */
-  async getCustomer(customerId) {
-    if (chatEnv.mockMode) {
-      await delay(200);
-      return mockCustomers.find((c) => c.id === customerId) ?? null;
-    }
-    // return httpClient(`/chat/customers/${customerId}`);
-    return null;
-  },
-
-  /** GET /chat/analytics/overview */
-  async getAnalytics() {
-    if (chatEnv.mockMode) {
-      await delay(300);
-      return mockAnalytics;
-    }
-    // return httpClient("/chat/analytics/overview");
-    return mockAnalytics;
-  },
+  
 
   /** POST /chat/conversations — start new widget conversation */
   async createConversation(payload) {

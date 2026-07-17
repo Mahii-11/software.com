@@ -1,11 +1,8 @@
 import {
   Minus,
   X,
-  MoreHorizontal,
   Sun,
-  Moon,
-  Phone,
-  Video,
+  Moon
 } from "lucide-react";
 import { useChatStore } from "../../store/chatStore";
 import { Avatar } from "../shared/Avatar";
@@ -62,16 +59,6 @@ export function ChatHeader() {
       </div>
 
       <div className="flex items-center gap-0.5">
-        {!isAiMode && (
-          <>
-            <button type="button" className="chat-icon-btn hidden sm:flex" aria-label="Voice call">
-              <Phone className="h-4 w-4" />
-            </button>
-            <button type="button" className="chat-icon-btn hidden sm:flex" aria-label="Video call">
-              <Video className="h-4 w-4" />
-            </button>
-          </>
-        )}
         <button
           type="button"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -84,9 +71,7 @@ export function ChatHeader() {
             <Moon className="h-4 w-4" />
           )}
         </button>
-        <button type="button" className="chat-icon-btn" aria-label="More options">
-          <MoreHorizontal className="h-4 w-4" />
-        </button>
+      
         <button
           type="button"
           onClick={() => setMinimized(true)}

@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { getHeroSectionData } from "../services/api";
 import HeroSkeleton from "../loading/HeroSkeleton";
 import { useAutoVideoController } from "../hooks/useAutoVideoController";
+import { Link } from "react-router";
 
 
 
@@ -64,7 +65,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-28 md:pt-24 lg:pt-20 overflow-hidden bg-gradient-to-b from-blue-50 via-white to-white">
+    <section className="relative min-h-screen flex items-center  pt-10 overflow-hidden bg-gradient-to-b from-blue-50 via-white to-white">
 
 
       <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-[1440px] pt-12 pb-32 min-h-[80vh] relative z-20">
@@ -91,13 +92,16 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button
+            <Link to="/start-project">
+               <Button
               size="lg"
               className="bg-slate-900 hover:bg-primary/90 text-white rounded-full px-8 h-12 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all"
               onClick={scrollToContact}
             >
               Start Project <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
+            </Link>
+           
             <Button
               size="lg"
               variant="outline"

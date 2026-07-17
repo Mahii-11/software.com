@@ -3,8 +3,8 @@ import { Link } from "react-router";
 
 export default function Footer() {
   return (
-    <footer className="mt-24 bg-gradient-to-b from-white to-gray-50 border-t border-gray-100 font-sans">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+    <footer className="mt-8 bg-gradient-to-b from-white to-gray-50 border-t border-gray-100 font-sans">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4">
         
         {/* Main Content Container */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-6">
@@ -50,11 +50,11 @@ export default function Footer() {
               <h4 className="text-[14px] font-bold text-slate-900 mb-5 uppercase tracking-widest">
                 Company
               </h4>
-              <ul className="space-y-3 text-[14px] text-slate-500">
-                <li className="hover:text-indigo-600 cursor-pointer transition-colors duration-200">About Us</li>
-                <li className="hover:text-indigo-600 cursor-pointer transition-colors duration-200">Our Careers</li>
-                <li className="hover:text-indigo-600 cursor-pointer transition-colors duration-200">Latest Blog</li>
-                <li className="hover:text-indigo-600 cursor-pointer transition-colors duration-200">Contact</li>
+              <ul className="text-[14px] text-slate-500">
+                <Link to="/about" > <li className="hover:text-indigo-600 cursor-pointer transition-colors duration-200 mb-3">About Us</li></Link>
+                <Link to="/portfolio" > <li className="hover:text-indigo-600 cursor-pointer transition-colors duration-200 mb-3">Our Works</li></Link>
+                <Link to="/media"><li className="hover:text-indigo-600 cursor-pointer transition-colors duration-200 mb-3">Media</li></Link>
+                <Link to="/contact"> <li className="hover:text-indigo-600 cursor-pointer transition-colors duration-200 mb-3">Contact</li></Link>
               </ul>
             </div>
 
